@@ -15,6 +15,7 @@ import {
   BarChart,
   ResponsiveContainer,
 } from "recharts";
+import { Table } from "./Table";
 
 function App() {
   return (
@@ -79,51 +80,54 @@ function MixedChart() {
   console.log("data:", data);
 
   return (
-    <ResponsiveContainer width="100%" height="80%">
-      <ComposedChart width={600} height={400} data={data}>
-        <XAxis dataKey="name" axisLine={false} tickLine={false} />
-        <YAxis
-          yAxisId="left"
-          orientation="left"
-          stroke="#8884d8"
-          axisLine={false}
-          tickLine={false}
-          tickCount={8}
-        />
-        <YAxis
-          yAxisId="right"
-          orientation="right"
-          stroke="#82ca9d"
-          axisLine={false}
-          tickLine={false}
-          tickCount={8}
-        />
-        <Tooltip />
-        <Legend />
-        <Bar
-          yAxisId="left"
-          dataKey="Bar_A"
-          stackId="a"
-          fill="red"
-          barSize={30}
-        />
-        <Bar yAxisId="left" dataKey="Bar_B" stackId="a" fill="blue" />
-        <Line
-          yAxisId="right"
-          type="linear"
-          dataKey="Line_A"
-          stroke="green"
-          strokeWidth={2}
-        />
-        <Line
-          yAxisId="right"
-          type="linear"
-          dataKey="Line_B"
-          stroke="black"
-          strokeWidth={2}
-        />
-      </ComposedChart>
-    </ResponsiveContainer>
+    <>
+      <ResponsiveContainer width="100%" height="80%">
+        <ComposedChart width={600} height={400} data={data}>
+          <XAxis dataKey="name" axisLine={false} tickLine={false} />
+          <YAxis
+            yAxisId="left"
+            orientation="left"
+            stroke="#8884d8"
+            axisLine={false}
+            tickLine={false}
+            tickCount={8}
+          />
+          <YAxis
+            yAxisId="right"
+            orientation="right"
+            stroke="#82ca9d"
+            axisLine={false}
+            tickLine={false}
+            tickCount={8}
+          />
+          <Tooltip />
+          <Legend />
+          <Bar
+            yAxisId="left"
+            dataKey="Bar_A"
+            stackId="a"
+            fill="red"
+            barSize={30}
+          />
+          <Bar yAxisId="left" dataKey="Bar_B" stackId="a" fill="blue" />
+          <Line
+            yAxisId="right"
+            type="linear"
+            dataKey="Line_A"
+            stroke="green"
+            strokeWidth={2}
+          />
+          <Line
+            yAxisId="right"
+            type="linear"
+            dataKey="Line_B"
+            stroke="black"
+            strokeWidth={2}
+          />
+        </ComposedChart>
+        <Table />
+      </ResponsiveContainer>
+    </>
   );
 }
 
