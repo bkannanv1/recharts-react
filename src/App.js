@@ -16,11 +16,18 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
+import { ScrollMenu } from "react-horizontal-scrolling-menu";
+import { LeftArrow, RightArrow } from "./react-scroll/arrows";
+import "react-horizontal-scrolling-menu/dist/styles.css";
+
 function App() {
   return (
     <div className="chart_example">
-      <div className="mixed">
+      {/* <div className="mixed">
         <MixedChart />
+      </div> */}
+      <div className="mixed">
+        <MixedChartWithScrolling />
       </div>
       {/* <div className="basic">
         Basic Line Chart
@@ -58,21 +65,134 @@ function generateData({ n }) {
   return data;
 }
 
-// const CustomTooltip = (data) => {
-//   const { active, payload, label } = data;
-//   console.log("data:", data);
-//   if (active && payload && payload.length) {
-//     return (
-//       <div className="custom-tooltip">
-//         <p className="label">{`${label} : ${payload[0].value}`}</p>
-//         <p className="intro">{label}</p>
-//         <p className="desc">Anything you want can be displayed here.</p>
-//       </div>
-//     );
-//   }
+const MIXED_CHART_ARR = [1, 2, 3];
 
-//   return null;
-// };
+function MixedChartWithScrolling() {
+  return (
+    <div>
+      <ScrollMenu
+        LeftArrow={LeftArrow}
+        RightArrow={RightArrow}
+        onWheel={onWheel}
+      >
+        {MIXED_CHART_ARR.map((id) => {
+          return <MixedChartParts key={id} />;
+        })}
+      </ScrollMenu>
+      {/* <ScrollMenu
+        LeftArrow={LeftArrow}
+        RightArrow={RightArrow}
+        onWheel={onWheel}
+      >
+        {MIXED_CHART_ARR.map((id) => {
+          return <Table key={id} />;
+        })}
+      </ScrollMenu> */}
+    </div>
+  );
+}
+
+function onWheel(apiObj, ev) {
+  const isThouchpad = Math.abs(ev.deltaX) !== 0 || Math.abs(ev.deltaY) < 15;
+
+  if (isThouchpad) {
+    ev.stopPropagation();
+    return;
+  }
+
+  if (ev.deltaY < 0) {
+    apiObj.scrollNext();
+  } else if (ev.deltaY > 0) {
+    apiObj.scrollPrev();
+  }
+}
+
+function MixedChartParts() {
+  const data = generateData({ n: 15 });
+  console.log("data:", data);
+
+  return (
+    <>
+      {/* // <ResponsiveContainer width="100%" height="80%"> */}
+      <ComposedChart width={600} height={400} data={data}>
+        <XAxis dataKey="name" axisLine={false} tickLine={false} />
+        <YAxis
+          yAxisId="left"
+          orientation="left"
+          stroke="#8884d8"
+          axisLine={false}
+          tickLine={false}
+          tickCount={8}
+        />
+        <YAxis
+          yAxisId="right"
+          orientation="right"
+          stroke="#82ca9d"
+          axisLine={false}
+          tickLine={false}
+          tickCount={8}
+        />
+        <Tooltip />
+        <Legend />
+        <Bar
+          yAxisId="left"
+          dataKey="Bar_A"
+          stackId="a"
+          fill="red"
+          barSize={30}
+        />
+        <Bar yAxisId="left" dataKey="Bar_B" stackId="a" fill="blue" />
+        <Line
+          yAxisId="right"
+          type="linear"
+          dataKey="Line_A"
+          stroke="green"
+          strokeWidth={2}
+        />
+        <Line
+          yAxisId="right"
+          type="linear"
+          dataKey="Line_B"
+          stroke="black"
+          strokeWidth={2}
+        />
+      </ComposedChart>
+      <Table />
+      {/* // </ResponsiveContainer> */}
+    </>
+  );
+}
+
+function TableHead({ n }) {
+  let head = [];
+  for (let i = 1; i < n + 1; i++) {
+    head.push(<th>7/{i}</th>);
+  }
+  return head;
+}
+
+function TableRows({ n }) {
+  let row = [];
+  for (let i = 1; i < n + 1; i++) {
+    row.push(<td>$100</td>);
+  }
+  return row;
+}
+
+function Table() {
+  return (
+    <table>
+      <tr>
+        <th>Date</th>
+        <TableHead n={10} />
+      </tr>
+      <tr>
+        <td>Spend</td>
+        <TableRows n={10} />
+      </tr>
+    </table>
+  );
+}
 
 function MixedChart() {
   const data = generateData({ n: 15 });
