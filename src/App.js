@@ -49,10 +49,10 @@ function generateData({ n }) {
   for (let i = 1; i < n + 1; i++) {
     data.push({
       name: `7/${i}`,
-      Bar_A: randomIntFromInterval(100, 400),
+      Bar_A: randomIntFromInterval(100, 300),
       Bar_B: randomIntFromInterval(100, 200),
-      Line_A: randomIntFromInterval(300, 1000),
-      Line_B: randomIntFromInterval(200, 500),
+      Line_A: randomIntFromInterval(200, 400),
+      Line_B: randomIntFromInterval(100, 250),
     });
   }
 
@@ -81,52 +81,58 @@ function MixedChart() {
 
   return (
     <>
-      <ResponsiveContainer width="100%" height="80%">
-        <ComposedChart width={600} height={400} data={data}>
-          <XAxis dataKey="name" axisLine={false} tickLine={false} />
-          <YAxis
-            yAxisId="left"
-            orientation="left"
-            stroke="#8884d8"
-            axisLine={false}
-            tickLine={false}
-            tickCount={8}
-          />
-          <YAxis
-            yAxisId="right"
-            orientation="right"
-            stroke="#82ca9d"
-            axisLine={false}
-            tickLine={false}
-            tickCount={8}
-          />
-          <Tooltip />
-          <Legend />
-          <Bar
-            yAxisId="left"
-            dataKey="Bar_A"
-            stackId="a"
-            fill="red"
-            barSize={30}
-          />
-          <Bar yAxisId="left" dataKey="Bar_B" stackId="a" fill="blue" />
-          <Line
-            yAxisId="right"
-            type="linear"
-            dataKey="Line_A"
-            stroke="green"
-            strokeWidth={2}
-          />
-          <Line
-            yAxisId="right"
-            type="linear"
-            dataKey="Line_B"
-            stroke="black"
-            strokeWidth={2}
-          />
-        </ComposedChart>
-        <Table />
-      </ResponsiveContainer>
+      {/* <ResponsiveContainer width="100%" height="80%"> */}
+      <ComposedChart width={600} height={200} data={data} barGap={8}>
+        <XAxis dataKey="name" axisLine={false} tickLine={false} />
+        <YAxis
+          yAxisId="left"
+          orientation="left"
+          stroke="#8884d8"
+          axisLine={false}
+          tickLine={false}
+          tickCount={8}
+        />
+        <YAxis
+          yAxisId="right"
+          orientation="right"
+          stroke="#82ca9d"
+          axisLine={false}
+          tickLine={false}
+          tickCount={6}
+        />
+        <Tooltip />
+        {/* <Legend /> */}
+        <Bar
+          yAxisId="left"
+          dataKey="Bar_A"
+          stackId="a"
+          fill="red"
+          barSize={28}
+        />
+        <Bar
+          yAxisId="left"
+          dataKey="Bar_B"
+          stackId="a"
+          fill="blue"
+          barSize={28}
+        />
+        <Line
+          yAxisId="right"
+          type="linear"
+          dataKey="Line_A"
+          stroke="green"
+          strokeWidth={2}
+        />
+        <Line
+          yAxisId="right"
+          type="linear"
+          dataKey="Line_B"
+          stroke="black"
+          strokeWidth={2}
+        />
+      </ComposedChart>
+      <Table />
+      {/* </ResponsiveContainer> */}
     </>
   );
 }
